@@ -37,15 +37,43 @@
 #define DIGIT_NULL   0x00
 #define DIGIT_MINUS  0x40
 
-const uint8_t DIGIT_TABLE[] = {0x3f, 0x06, 0x5b, 0x4f, // 0000 0110 0101 1011
-                              0x66, 0x6d, 0x7d, 0x07,
-                              0x7f, 0x6f, 0x77, 0x7c,
-                              0x39, 0x5e, 0x79, 0x71,
-                              0x6d 
-                             }; //0~9,A,b,C,d,E,F
-                                // TEST    
-                                //SENT          0010 1101
-                                //SET
+//const uint8_t DIGIT_TABLE[] = {0x3f, 0x06, 0x5b, 0x4f, // 0000 0110 0101 1011
+//                              0x66, 0x6d, 0x7d, 0x07,
+//                              0x7f, 0x6f, 0x77, 0x7c,
+//                              0x39, 0x5e, 0x79, 0x71,
+//                              0x6d 
+//                             }; //0~9,A,b,C,d,E,F
+//                                // TEST    
+//                                //SENT          0010 1101
+//                                //SET
+//
+//      A
+//     ---
+//  F |   | B
+//     -G-
+//  E |   | C
+//     ---
+//      D
+const uint8_t DIGIT_TABLE[] = {
+ // XGFEDCBA
+  0b00111111,    // 0
+  0b00000110,    // 1
+  0b01011011,    // 2
+  0b01001111,    // 3
+  0b01100110,    // 4
+  0b01101101,    // 5
+  0b01111101,    // 6
+  0b00000111,    // 7
+  0b01111111,    // 8
+  0b01101111,    // 9
+  0b01110111,    // A
+  0b01111100,    // b
+  0b00111001,    // C
+  0b01011110,    // d
+  0b01111001,    // E
+  0b01110001     // F
+  };
+                                
 
 inline uint8_t conv(uint8_t n)
 {
