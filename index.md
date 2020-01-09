@@ -1,12 +1,12 @@
 2019 Fall Embedded System Lab Final Project - Awesome Alarm
 ===
 
-Author: Chang-Le Liu（劉昶樂） Yung-Sung Chuang（莊永松）\
-Student ID: b05901017 b05901033\
-Department: Electrical Engineering Department, National Taiwan University\
-Advisor: Professor Sheng-De Wang\
-Github repo: https://github.com/NTUEE-ESLab/2019-AwesomeAlarm \
-Demo video: https://youtu.be/ \
+Author: Chang-Le Liu（劉昶樂） Yung-Sung Chuang（莊永松） 
+Student ID: b05901017 b05901033  
+Department: Electrical Engineering Department, National Taiwan University  
+Advisor: Professor Sheng-De Wang  
+Github repo: https://github.com/NTUEE-ESLab/2019-AwesomeAlarm  
+Demo video: https://youtu.be/  
 Project date: January 2020
 
 Content
@@ -28,16 +28,14 @@ To some of us, sleep is a luxury, a hobby or a favorite pastime. A common proble
 Implementation
 ===
 ### I. System Diagram
-As the below figure shows, the Awesome Alarm can be highed above the bed and let the ultrasonic sensor point the region around the head. Set the alarm by the app, and it will wake you up then with light point emitting to your face. You can turn off the alarm by getting up and using the laser gun to shoot the light sensor at the center of the target circle pad.
-\
-\
+As the below figure shows, the Awesome Alarm can be highed above the bed and let the ultrasonic sensor point the region around the head. Set the alarm by the app, and it will wake you up then with light point emitting to your face. You can turn off the alarm by getting up and using the laser gun to shoot the light sensor at the center of the target circle pad.  
+
 ![](https://i.imgur.com/6azwrIC.png)
 
 
 ### II. System Structure 
-The below shows the flowchart of Awesome Alarm. An ultrasonic sensor connected to the STM32L475 board (Discovery kit IoT node, called STM32 thereafter) are used to detect the position of the head. Then STM32 controls the steering engine (and the flashlight equipeed on it) to point to the head. STM32 is connected to the cellphone through BLE, and the user can set the alarm time. When the time is up, the alarm rings. Once the light sensor connected to STM32 receives the light emitted from the laser gun. 
-\
-\
+The below shows the flowchart of Awesome Alarm. An ultrasonic sensor connected to the STM32L475 board (Discovery kit IoT node, called STM32 thereafter) are used to detect the position of the head. Then STM32 controls the steering engine (and the flashlight equipeed on it) to point to the head. STM32 is connected to the cellphone through BLE, and the user can set the alarm time. When the time is up, the alarm rings. Once the light sensor connected to STM32 receives the light emitted from the laser gun.   
+
 ![](https://i.imgur.com/7fNpVnf.png)
 
 
@@ -47,11 +45,16 @@ We used 3D printer to make out the outer casing of the alarm, and fixed the stee
 
 ![](https://i.imgur.com/juq0nAY.jpg)
 
+#### Modules:
+- Ultrasound Sensor HC-SR04
+- Servo motors
+- Digits Display
+- Light Sensor (PhotoResistor)
+- Buzzer
 
 ### IV. App Interface
-The below figure shows the designed app interface. The user can click "BT List" button to scan and connect the alarm. Click "Disconnect" to disconnect the alarm. Click "Select Time" to set the alarm time. Click "CountDown" to use countdown function. When the alarm rings, click "TurnOff" to turn off the alarm. 
-\
-\
+The below figure shows the designed app interface. The user can click "BT List" button to scan and connect the alarm. Click "Disconnect" to disconnect the alarm. Click "Select Time" to set the alarm time. Click "CountDown" to use countdown function. When the alarm rings, click "TurnOff" to turn off the alarm.   
+
 ![](https://raw.githubusercontent.com/NTUEE-ESLab/2019-AwesomeAlarm/master/phone.jpg)
 
 Challenge
@@ -60,10 +63,11 @@ Challenge
   
 - Difficulty of Detecting Head Position
   
-  - Head position detection is not a easy task. We first wanted to achieve this by equipping a camera to STM32 and adopt real-time human-head detection algorithm. However, it is difficult to connect cheap camera module like ov7670 to DKI. Of course, we can use expensive module like Arducam, but it cost more than NTD 1000. The use of expensive materials contradicts the price advantage of STM32 board over Rpi. 
-  - We also tried to use infrared sensor to detect the head, but we encountered a similar problem. Most off-the-shelf infrared sensors are designed to detect the motion, but not the position
+  - The head position detection is not a easy task. Firstly, We tried to use infrared sensor to detect the head by the Infrared radiation (紅外線) emitted by human, but we encountered some problem. Most off-the-shelf infrared sensors are designed to detect the motion by simplly 
+  - After that, we want to use a camera to detect the head by taking images and using face recognition (with OpenCV). We first wanted to achieve this by equipping a camera to STM32 and adopt real-time human-head detection algorithm. However, it is difficult to connect cheap camera module like ov7670 to DKI. Of course, we can use expensive module like Arducam, but it cost more than NTD 1000. The use of expensive materials contradicts the price advantage of STM32 board over Rpi. 
     
 - Difficulty of Control Steering Engine Precisely
+  - The 
 
 Achievement 
 ===
@@ -73,10 +77,13 @@ To sum up, we solved lots of problems, including integrating several sensors and
 
 Reference
 ===
-- https://www.arduino.cc/en/Reference/ArduinoBLE
-- https://www.arduino.cc/en/reference/wire
-- https://os.mbed.com/docs/mbed-os/v5.15/introduction/index.html
-- https://appinventor.mit.edu/explore/ai2/tutorials
-- 
+- [https://www.arduino.cc/en/Reference/ArduinoBLE](https://www.arduino.cc/en/Reference/ArduinoBLE)
+- [https://www.arduino.cc/en/reference/wire](https://www.arduino.cc/en/reference/wire)
+- [https://os.mbed.com/docs/mbed-os/v5.15/introduction/index.html](https://os.mbed.com/docs/mbed-os/v5.15/introduction/index.html)
+- [https://appinventor.mit.edu/explore/ai2/tutorials](https://appinventor.mit.edu/explore/ai2/tutorials)
+- [Digits Display: https://os.mbed.com/users/wim/code/TM1637/](https://os.mbed.com/users/wim/code/TM1637/)
+- [Servo Motor MG996: https://os.mbed.com/users/simon/code/Servo/](https://os.mbed.com/users/simon/code/Servo/)
+- [Ultrasound Sensor HC-SR04: https://os.mbed.com/users/Nestordp/code/HC-SR04/](https://os.mbed.com/users/Nestordp/code/HC-SR04/)
+- [Buzzer: https://os.mbed.com/users/Reniboy/code/buzzer/](https://os.mbed.com/users/Reniboy/code/buzzer/)
 
 
