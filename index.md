@@ -1,9 +1,8 @@
-2019 Fall Embedded System Lab Final Project - Awesome Alarm
+**2019 Fall Embedded System Lab Final Project - Awesome Alarm**
 ===
 
-Author: Chang-Le Liu（劉昶樂） Yung-Sung Chuang（莊永松） 
-Student ID: b05901017 b05901033  
-Department: Electrical Engineering Department, National Taiwan University  
+Author: Chang-Le Liu（劉昶樂 b05901017/github id: [clalanliu](https://github.com/clalanliu)） Yung-Sung Chuang（莊永松 b05901033/github id: [voidism](https://github.com/voidism)） 
+Department: 4-th year, Electrical Engineering Department, National Taiwan University  
 Advisor: Professor Sheng-De Wang  
 Github repo: https://github.com/NTUEE-ESLab/2019-AwesomeAlarm  
 Demo video: https://youtu.be/  
@@ -13,13 +12,14 @@ Content
 ===
 - Motivation
 - Implementation
+- Setup & Usage
 - Challenge
 - Achievement
 - Reference
 
 Abstract
 ===
-In this project, we have successfully developed a creative alarm called Awesome Alarm. By using Awesome Alarm, the user can wake up easier and with more fun! We integrated several sensors for STM-32 to enable the user to be waked up by light, instead of disturbing ringing which may annoy your roommates. The alarm can be easily set by Android App. Awesome Alarm is made up by an STM32 Discovery IOT board. 
+In this project, we have successfully developed a creative alarm called "Awesome Alarm". By using Awesome Alarm, the user can wake up easier and with more fun! We integrated several sensors for STM-32 to enable the user to be waked up by light, instead of disturbing ringing which may annoy your roommates. The alarm can be easily set by Android App. Awesome Alarm is made up by an STM32 Discovery IOT board. 
 
 Motivation
 ===
@@ -38,34 +38,60 @@ The below shows the flowchart of Awesome Alarm. An ultrasonic sensor connected t
 
 ![](https://i.imgur.com/7fNpVnf.png)
 
-
 ### III. HardWare Assembling
-We used 3D printer to make out the outer casing of the alarm, and fixed the steering engine to the case, as shown below.
-
-
-![](https://i.imgur.com/juq0nAY.jpg)
 
 #### Modules:
+
 - Ultrasound Sensor HC-SR04
-- Servo motors
-- Digits Display
+![](https://i.imgur.com/NoB0310.png)
+- Servo motors (MG996r) x2
+![](https://i.imgur.com/OQbGV0s.png)
+- Digits Display (TM1637)
+![](https://i.imgur.com/f44lyuK.png)
 - Light Sensor (PhotoResistor)
+![](https://i.imgur.com/QtPog6I.png)
 - Buzzer
+![](https://i.imgur.com/Cmb4d6D.png)
+- Big LED x9
+
+We used 3D printer to make out the outer casing of the alarm, and fixed the steering engine to the case, as shown below.
+
+|      |                                      |
+| ---- | ------------------------------------ |
+|  ![](https://i.imgur.com/juq0nAY.jpg)    | ![](https://i.imgur.com/n8n5bmn.jpg) |
+
+
+
+
 
 ### IV. App Interface
 The below figure shows the designed app interface. The user can click "BT List" button to scan and connect the alarm. Click "Disconnect" to disconnect the alarm. Click "Select Time" to set the alarm time. Click "CountDown" to use countdown function. When the alarm rings, click "TurnOff" to turn off the alarm.   
 
 ![](https://raw.githubusercontent.com/NTUEE-ESLab/2019-AwesomeAlarm/master/images/phone.jpg)
 
+Setup & Usage
+===
+
+### Board side
+1. Go to mbed online compiler https://os.mbed.com/ide/ 
+2. Import our code at https://os.mbed.com/users/yungsung/code/AwesomeAlarm_BLE/
+3. Compile!
+
+### Client side
+1. install the Android app with the APK file in `/android_app/`
+
+
+
 Challenge
 ===
+
 - Difficulty of Integration of Several Sensor
   
 - Difficulty of Detecting Head Position
   
-  - The head position detection is not a easy task. Firstly, We tried to use infrared sensor to detect the head by the Infrared radiation (紅外線) emitted by human, but we encountered some problem. Most off-the-shelf infrared sensors are designed to detect the motion by simplly 
-  - After that, we want to use a camera to detect the head by taking images and using face recognition (with OpenCV). We first wanted to achieve this by equipping a camera to STM32 and adopt real-time human-head detection algorithm. However, it is difficult to connect cheap camera module like ov7670 to DKI. Of course, we can use expensive module like Arducam, but it cost more than NTD 1000. The use of expensive materials contradicts the price advantage of STM32 board over Rpi. 
-    
+  - The head position detection is not a easy task. Firstly, We tried to use infrared sensor to detect the head by the Infrared Radiation (紅外線) emitted by human, but we encountered a big problem. Most off-the-shelf infrared sensors are designed to detect the motion by simply computer the difference value along time (while a absolute infrared radiation value is not stable in non-static environment). However, when people are static (e.g. sleep), the sensor can't send out positive value to indicate that. We find there is no sensor can achieve our goal. 
+  - After that, we wanted to use a camera to detect the head by taking images and using face recognition (with OpenCV). We planned to achieve this by equipping a camera to STM32 and adopt real-time human-head detection algorithm. However, it is difficult to connect cheap camera module like ov7670 to STM32. Of course, we can use expensive module like Arducam, but it cost more than NTD 1000. The use of expensive materials contradicts the price advantage of STM32 board over RPi. 
+  
 - Difficulty of Control Steering Engine Precisely
   - The 
 
@@ -85,5 +111,6 @@ Reference
 - [Servo Motor MG996: https://os.mbed.com/users/simon/code/Servo/](https://os.mbed.com/users/simon/code/Servo/)
 - [Ultrasound Sensor HC-SR04: https://os.mbed.com/users/Nestordp/code/HC-SR04/](https://os.mbed.com/users/Nestordp/code/HC-SR04/)
 - [Buzzer: https://os.mbed.com/users/Reniboy/code/buzzer/](https://os.mbed.com/users/Reniboy/code/buzzer/)
+
 
 
