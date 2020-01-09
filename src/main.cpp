@@ -1,6 +1,25 @@
-#include "mbed.h"
+/* mbed Microcontroller Library
+ * Copyright (c) 2006-2013 ARM Limited
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#include <events/mbed_events.h>
+#include <mbed.h>
+#include "ble/BLE.h"
+#include "LEDService.h"
+
 #include "Servo.h"
-//#include "DigitDisplay.h"
 #include "buzzer.h"
 #include "HCSR04.h"
 #include "TM1637.h" 
@@ -11,16 +30,14 @@
 #define laserPin PA_3                 // D4
 #define SERVO_PIN PD_14               // D2
 #define buzzerPin PA_2                // D10
-#define trigPin PA_6                  // D12
-#define echoPin PA_7                  // D11
+#define trigPin PB_4                  // D5
+#define echoPin PB_1                  // D6
 #define CDSPin A0                 // light sensor in pin A0
-int CDSVal; // initial value for light sensor = 0
 
-
-//DigitDisplay display(CLK, DIO);
-//Servo servoVer(SERVO_PIN);
+DigitalOut alivenessLED(LED1, 0);
+DigitalOut actuatedLED(LED2, 0);
+Serial pc(USBTX, USBRX);
 Beep buzzer(buzzerPin);
-Serial pc(USBTX,USBRX); 
 HCSR04 sonar(trigPin, echoPin);
 
 // Setup: Pin Mode In/Out
@@ -29,20 +46,6 @@ DigitalOut out_led(PA_4);
 DigitalOut out_laser(PA_3);
 PwmOut servoVer(SERVO_PIN);
 AnalogIn light_sensor(CDSPin);
-//display.setBrightness(0x0f);
-//display.setColon(true);
-//uint8_t data[] = { 0x0, 0x0, 0x0, 0x0 };
-//pinMode(buzzerPin, OUTPUT);
-//pinMode(ledPin, OUTPUT);
-//pinMode(laserPin, OUTPUT);
-//pinMode(SERVO_PIN, OUTPUT);
-//pinMode(CDSPin, INPUT);
-//Serial.begin(9600);
-//I2CBT.begin(38400);
-//pinMode(trigPin, OUTPUT);        //Define inputs and outputs 
-//pinMode(echoPin, INPUT);
-//servoVer.attach(SERVO_PIN, 544, 2400); 
-//servoVer.write(start_pos);
 
 //DisplayData_t size is 6 bytes (6 grids @ 8 segments)
 char digits[] = {63,6,91,79,102,109,125,7,127,111};
@@ -64,9 +67,31 @@ float my_dist[21];
 int16_t remain = 5;
 const float start_pos = 120.0;
 const float end_pos = 60.0;
+int CDSVal; // initial value for light sensor = 0
+
+// TODO: replace the virtual timing with RTC clock
+int hr = 15;
+int minutes = 35;
+int sec = 40;
+
+const static char     DEVICE_NAME[] = "AwesomeAlarm";
+static const uint16_t uuid16_list[] = {LEDService::LED_SERVICE_UUID};
+int i = 0;
+int ble_read_value = 0;
+static EventQueue eventQueue(/* event count */ 10 * EVENTS_EVENT_SIZE);
+bool end_ring = 0;
+bool display_time = 1;
+// Define Threads
+Thread* thread_ring = new Thread();  // ring tone while waiting for laser gun shot
+Thread* thread_ble = new Thread();   // read ble while main program is executed
+Thread* thread_scan = new Thread();  // scan the distance while count the time
+Thread* thread_time = new Thread();  // ount the time and display it when main program is running
+
+LEDService *ledServicePtr;
 
 // Function: Buzzer Beep ring
-void ringTone(int num) {
+void ringTone() {
+  int num = 10;
   for (int j=0; j<num; j++) { //repeat num times
       for (int i=0; i<10; i++) { //repeat 10 times
         buzzer.beep(1000,0.05); 
@@ -76,6 +101,10 @@ void ringTone(int num) {
         }
       buzzer.nobeep();
       wait(2);
+      if (end_ring) {
+          end_ring = 0;
+          break;
+      }
   }
 }
 
@@ -152,36 +181,156 @@ void lowest(){
   printf("MIN Origin %.2f cm\n", my_dist[maximum_t]); 
   idx = 0;
   write_servo(max_angle);
-//  for(int i=start_pos; i>=end_pos; i-=5.0) {
-//      write_servo(i);
-//      wait(1);
-//      if (idx==maximum_t) break;
-//      idx += 1;
-//  }
+}
+
+void disconnectionCallback(const Gap::DisconnectionCallbackParams_t *params)
+{
+    (void) params;
+    BLE::Instance().gap().startAdvertising();
+}
+
+void blinkCallback(void)
+{
+    alivenessLED = !alivenessLED; /* Do blinky on LED1 to indicate system aliveness. */
+//    pc.printf("CallBack!\n");
+}
+
+/**
+ * This callback allows the LEDService to receive updates to the ledState Characteristic.
+ *
+ * @param[in] params
+ *     Information about the characterisitc being updated.
+ */
+void onDataWrittenCallback(const GattWriteCallbackParams *params) {
+
+    ble_read_value = *(params->data);
+    if ((params->handle == ledServicePtr->getValueHandle())) {
+        actuatedLED = *(params->data);
+        pc.printf("\nSet Values: ");
+        pc.printf("%d ", *(params->data));
+        pc.printf("Length: %d", params->len);
+        pc.printf("\n");
+    } else{
+        pc.printf("\nFailed to Set Values: ");
+        pc.printf("%d ", *(params->data));
+        pc.printf("Length: %d", params->len);
+        pc.printf("\n");
+    }
+        
+}
+
+/**
+ * This function is called when the ble initialization process has failled
+ */
+void onBleInitError(BLE &ble, ble_error_t error)
+{
+    /* Initialization error handling should go here */
+}
+
+/**
+ * Callback triggered when the ble initialization process has finished
+ */
+void bleInitComplete(BLE::InitializationCompleteCallbackContext *params)
+{
+    BLE&        ble   = params->ble;
+    ble_error_t error = params->error;
+
+    if (error != BLE_ERROR_NONE) {
+        /* In case of error, forward the error handling to onBleInitError */
+        onBleInitError(ble, error);
+        return;
+    }
+
+    /* Ensure that it is the default instance of BLE */
+    if(ble.getInstanceID() != BLE::DEFAULT_INSTANCE) {
+        return;
+    }
+
+    ble.gap().onDisconnection(disconnectionCallback);
+    ble.gattServer().onDataWritten(onDataWrittenCallback);
+
+    bool initialValueForLEDCharacteristic = false;
+    ledServicePtr = new LEDService(ble, initialValueForLEDCharacteristic);
+
+    /* setup advertising */
+    ble.gap().accumulateAdvertisingPayload(GapAdvertisingData::BREDR_NOT_SUPPORTED | GapAdvertisingData::LE_GENERAL_DISCOVERABLE);
+    ble.gap().accumulateAdvertisingPayload(GapAdvertisingData::COMPLETE_LIST_16BIT_SERVICE_IDS, (uint8_t *)uuid16_list, sizeof(uuid16_list));
+    ble.gap().accumulateAdvertisingPayload(GapAdvertisingData::COMPLETE_LOCAL_NAME, (uint8_t *)DEVICE_NAME, sizeof(DEVICE_NAME));
+    ble.gap().setAdvertisingType(GapAdvertisingParams::ADV_CONNECTABLE_UNDIRECTED);
+    ble.gap().setAdvertisingInterval(1000); /* 1000ms. */
+    ble.gap().startAdvertising();
+}
+
+void scheduleBleEventsProcessing(BLE::OnEventsToProcessCallbackContext* context) {
+    BLE &ble = BLE::Instance();
+    eventQueue.call(Callback<void()>(&ble, &BLE::processEvents));
+}
+
+void run_ble(){
+    
+    BLE &ble = BLE::Instance();
+    ble.onEventsToProcess(scheduleBleEventsProcessing);
+    ble.init(bleInitComplete);
+
+    eventQueue.dispatch_forever();
+}
+
+void count_time() {
+    while(1){
+        wait(1);
+        sec = sec + 1;
+        if (sec == 60){
+            minutes = minutes + 1;
+            sec = 0;
+        }
+        if (minutes == 60) {
+            hr = hr + 1;
+            minutes = 0;
+        }
+        if (hr == 24) {
+            hr = 0;
+        }
+        if (display_time)
+        write_digits(100*hr + minutes);
+    }
+    
 }
 
 
-int main() {
-    
-    pc.printf("Hello World!\n");
+int main()
+{
+    eventQueue.call_every(500, blinkCallback);
+    pc.printf("\nHelloWorld!\n");
+    thread_ble->start(run_ble);
+    thread_time->start(count_time);
+        
+    pc.printf("BLE Setup Done!\n");
 
     CATALEX.cls(); 
     CATALEX.writeData(all_str);
     CATALEX.setBrightness(TM1637_BRT3);
-    scan();
-
-    for(remain=5;remain>=0;remain--)
+    
+    // Start infine loop!
+    while(1){
+    while (ble_read_value==0){
+        pc.printf("Waiting for write...\n");
+        wait(1);
+    }
+    thread_scan->start(scan);
+    display_time = 0;
+    for(remain=ble_read_value;remain>=0;remain--)
     {
         write_digits(remain);
         wait(1);
     }
-    ringTone(2);
+    lowest();
+    display_time = 1;
+    thread_ring->start(ringTone);
     out_led = 1;
     out_laser = 1;
-    lowest();
-    printf("RTC example\n"); 
+//    printf("RTC example\n"); 
 //    set_time(1387188323); // Set RTC time to 16 December 2013 10:05:23 UTC
-    printf("Date and time are set.\n");
+//    printf("Date and time are set.\n");
 
     while(1) {
 
@@ -202,8 +351,15 @@ int main() {
         myled = !myled;      
         wait(1);
     }
-    
+    end_ring = 1;
     out_led = 0;
     out_laser = 0;
-    while(1);
+    ble_read_value=0;
+    thread_ring->join();
+    thread_scan->join();
+    delete thread_ring;
+    delete thread_scan;
+    thread_ring = new Thread();
+    thread_scan = new Thread();
+    }
 }
