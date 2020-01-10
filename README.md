@@ -28,10 +28,10 @@ Content
     + [II. System Structure](#ii-system-structure)
     + [III. HardWare Assembling](#iii-hardware-assembling)
     + [IV. App Interface](#iv-app-interface)
-- [Setup & Usage](#Setup\ &\ Usage)
-- [Challenge](#Challenge)
-- [Achievement](#Achievement)
-- [Reference](#Reference)
+- [Setup & Usage](#setup--usage)
+- [Challenge](#challenge)
+- [Achievement](#achievement)
+- [Reference](#reference)
 
 
 Abstract
