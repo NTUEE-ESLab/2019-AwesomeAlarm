@@ -38,7 +38,7 @@ Abstract
 ===
 In this project, we have successfully developed a creative alarm called "Awesome Alarm". By using Awesome Alarm, the user can wake up easier and with more fun! We integrated several sensors for STM-32 to enable the user to be waked up by light, instead of disturbing ringing which may annoy your roommates. The alarm can be easily set by Android App. Awesome Alarm is made up by an STM32 Discovery IOT board. 
 
-<img src="https://i.imgur.com/4vIxiOm.png" style="zoom: 67%;" />
+<img src="https://i.imgur.com/4vIxiOm.png"  width="700"  />
 
 
 Motivation
@@ -50,13 +50,13 @@ Implementation
 ### I. System Diagram
 As the below figure shows, the Awesome Alarm can be highed above the bed and let the ultrasonic sensor point the region around the head. Set the alarm by the app, and it will wake you up then with light point emitting to your face. You can turn off the alarm by getting up and using the laser gun to shoot the light sensor at the center of the target circle pad.  
 
-<img src="https://i.imgur.com/6azwrIC.png =x240" style="zoom:33%;" />
+<img src="https://i.imgur.com/6azwrIC.png =x240"  width="300"  />
 
 
 ### II. System Structure 
 The below shows the flowchart of Awesome Alarm. An ultrasonic sensor connected to the STM32L475 board (Discovery kit IoT node, called STM32 thereafter) are used to detect the position of the head. Then STM32 controls the steering engine (and the flashlight equipeed on it) to point to the head. STM32 is connected to the cellphone through BLE, and the user can set the alarm time. When the time is up, the alarm rings. Once the light sensor connected to STM32 receives the light emitted from the laser gun.   
 
-<img src="https://i.imgur.com/7fNpVnf.png =x240" style="zoom:50%;" />
+<img src="https://i.imgur.com/7fNpVnf.png =x240"  width="700"  />
 
 ### III. HardWare Assembling
 
@@ -64,20 +64,20 @@ The below shows the flowchart of Awesome Alarm. An ultrasonic sensor connected t
 
 | Ultrasound Sensor HC-SR04 | Servo motors (MG996r) x2 |Digits Display (TM1637)|
 | ---------------------------- | --------------------------------- | --------------------------------- |
-|![](https://i.imgur.com/NoB0310.png =x120)|<img src="https://i.imgur.com/OQbGV0s.png" style="zoom:75%;" />|![](https://i.imgur.com/f44lyuK.png =x120)|
+|![](https://i.imgur.com/NoB0310.png)|<img src="https://i.imgur.com/OQbGV0s.png" style="zoom:75%;" />|![](https://i.imgur.com/f44lyuK.png)|
 |**Light Sensor (PhotoResistor)**|**Buzzer**|**Big LED x9**|
-|![](https://i.imgur.com/QtPog6I.png =x120)|![](https://i.imgur.com/Cmb4d6D.png =x120)|<img src="https://i.imgur.com/FY7hSug.jpg" style="zoom:6%;" />|
+|![](https://i.imgur.com/QtPog6I.png)|![](https://i.imgur.com/Cmb4d6D.png)|<img src="https://i.imgur.com/FY7hSug.jpg" width="150" />|
 
 We used 3D printer to make out the outer casing of the alarm, and fixed the steering engine to the case, as shown below.
 
-| Front view                                                   | Side view                            |
-| ------------------------------------------------------------ | ------------------------------------ |
-| <img src="https://i.imgur.com/juq0nAY.jpg" style="zoom:60%;" /> | ![](https://i.imgur.com/n8n5bmn.jpg) |![](https://i.imgur.com/f44lyuK.png =x120)|
+| Front view                                                | Side view                            |
+| --------------------------------------------------------- | ------------------------------------ |
+| <img src="https://i.imgur.com/juq0nAY.jpg" width="600" /> | ![](https://i.imgur.com/n8n5bmn.jpg) |
 
 ### IV. App Interface
 The below figure shows the designed app interface. The user can click "BT List" button to scan and connect the alarm. Click "Disconnect" to disconnect the alarm. Click "Select Time" to set the alarm time. Click "CountDown" to use countdown function. When the alarm rings, click "TurnOff" to turn off the alarm.   
 
-<img src="https://raw.githubusercontent.com/NTUEE-ESLab/2019-AwesomeAlarm/master/images/phone.jpg" style="zoom: 33%;" />
+<img src="https://raw.githubusercontent.com/NTUEE-ESLab/2019-AwesomeAlarm/master/images/phone.jpg"  width="300" />
 
 Setup & Usage
 ===
@@ -115,7 +115,7 @@ Challenge
 
 Achievement 
 ===
-To sum up, we solved lots of problems, including integrating several sensors and mortors, head position detection, and APP-STM32 communication. And we not only test developted the code theoretically but also made a prototype of Awesome Alarm.
+To sum up, we solved lots of problems, including integrating several sensors and mortors, head position detection, and APP-STM32 communication. And we not only test developed the code theoretically but also made a prototype of Awesome Alarm.
 
 - Demonstration video as link:
   - Video 1: https://www.youtube.com/watch?v=qOvSRf1jk_Y
