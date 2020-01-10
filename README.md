@@ -27,6 +27,11 @@ Content
     + [I. System Diagram](#i-system-diagram)
     + [II. System Structure](#ii-system-structure)
     + [III. HardWare Assembling](#iii-hardware-assembling)
+      * [1. Modules](#1-modules)
+      * [2. Appearance](#2-appearance)
+      * [3. Ultrasound Head Position Detection](#3-ultrasound-head-position-detection)
+      * [4. Software Architecture & Thread design](#4-software-architecture---thread-design)
+      * [5. Laser Gun Target Detection](#5-laser-gun-target-detection)
     + [IV. App Interface](#iv-app-interface)
 - [Setup & Usage](#setup--usage)
 - [Challenge](#challenge)
@@ -60,7 +65,7 @@ The below shows the flowchart of Awesome Alarm. An ultrasonic sensor connected t
 
 ### III. HardWare Assembling
 
-#### Modules:
+#### 1. Modules
 
 | Ultrasound Sensor HC-SR04 | Servo motors (MG996r) x2 |Digits Display (TM1637)|
 | ---------------------------- | --------------------------------- | --------------------------------- |
@@ -68,11 +73,34 @@ The below shows the flowchart of Awesome Alarm. An ultrasonic sensor connected t
 |**Light Sensor (PhotoResistor)**|**Buzzer**|**Big LED x9**|
 |![](https://i.imgur.com/QtPog6I.png)|![](https://i.imgur.com/Cmb4d6D.png)|<img src="https://i.imgur.com/FY7hSug.jpg" width="150" />|
 
+#### 2. Appearance
 We used 3D printer to make out the outer casing of the alarm, and fixed the steering engine to the case, as shown below.
 
 | Front view                                                | Side view                            |
 | --------------------------------------------------------- | ------------------------------------ |
 | <img src="https://i.imgur.com/juq0nAY.jpg" width="600" /> | ![](https://i.imgur.com/n8n5bmn.jpg) |
+
+#### 3. Ultrasound Head Position Detection
+
+We use the ultrasound distance sensor HC-SR04 to scan the distance to the bed in every angle before the user go to bed. When the user needs to wake up, it scans again to find the position where the distance decreases the most. The distance decreases means the user's head is there. A flashlight and buzzer sound appear directly to user's head. If the returned value is too short (sensor is not stable in sometimes), we detect the distance again.
+
+<img src="https://i.imgur.com/G3jiykq.png"  width="600" />
+
+#### 4. Software Architecture & Thread design
+
+In our program, the STM32 board needs to do many things at the same time, so we use threading to handle all the timing overlapping in differenct functions. For example, the BLE boardcast and timer are running in all time, which use two threads to run. The same situation happened among buzzer and light sensor and the ultrasound sensor. When the user sets a wake up time, the digits display, driven by a semaphore, will stop display time. And the countdown time (in seconds) will get the semaphore to display itself on the digits display.
+
+<img src="https://i.imgur.com/k5AAIBk.png"  width="600" />
+
+#### 5. Laser Gun Target Detection
+
+We use a light sensor, which have a photoresister on it, to detect the laser emitted by the user's laser gun. Under normal light, the sensor would return values ranging from 200 to 500. When a powerful laser is emitted to it, the return value would drop to <100. We sets the threshold to 100 to distinguish whether the user successfully shots the target.
+
+
+
+<img src="https://i.imgur.com/VLsKUBR.png" width="400" />
+
+
 
 ### IV. App Interface
 The below figure shows the designed app interface. The user can click "BT List" button to scan and connect the alarm. Click "Disconnect" to disconnect the alarm. Click "Select Time" to set the alarm time. Click "CountDown" to use countdown function. When the alarm rings, click "TurnOff" to turn off the alarm.   
