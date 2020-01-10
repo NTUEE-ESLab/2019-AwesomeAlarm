@@ -111,8 +111,8 @@ Setup & Usage
 ===
 
 ### Board side
-1. Go to mbed online compiler https://os.mbed.com/ide/ 
-2. Import our code at https://os.mbed.com/users/yungsung/code/AwesomeAlarm_BLE/
+1. Go to mbed online compiler [https://os.mbed.com/ide/ ](https://os.mbed.com/ide/ )
+2. Import our code at [https://os.mbed.com/users/yungsung/code/AwesomeAlarm_BLE/](https://os.mbed.com/users/yungsung/code/AwesomeAlarm_BLE/)
 3. Compile! Burn the binary into STM32.
 
 ### Client side
