@@ -30,7 +30,7 @@ Content
       * [1. Modules](#1-modules)
       * [2. Appearance](#2-appearance)
       * [3. Ultrasound Head Position Detection](#3-ultrasound-head-position-detection)
-      * [4. Software Architecture & Thread design](#4-software-architecture---thread-design)
+      * [4. Software Architecture & Thread design](#4-software-architecture--thread-design)
       * [5. Laser Gun Target Detection](#5-laser-gun-target-detection)
     + [IV. App Interface](#iv-app-interface)
 - [Setup & Usage](#setup--usage)
