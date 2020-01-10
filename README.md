@@ -7,13 +7,13 @@
 
 **Department**: 4-th year, Electrical Engineering Department, National Taiwan University  
 **Advisor**: Professor Sheng-De Wang  
-**Github repo**: https://github.com/NTUEE-ESLab/2019-AwesomeAlarm  
-**Mbed repo**: https://os.mbed.com/users/yungsung/code/AwesomeAlarm_BLE/  
-**Slide**: https://docs.google.com/presentation/d/1IQKsBf2jPfg-3wsu4O3Ukr4jt6mabXckDCMN17Xowb4/edit?usp=sharing  
+**Github repo**: [https://github.com/NTUEE-ESLab/2019-AwesomeAlarm](https://github.com/NTUEE-ESLab/2019-AwesomeAlarm)  
+**Mbed repo**: [https://os.mbed.com/users/yungsung/code/AwesomeAlarm_BLE/](https://os.mbed.com/users/yungsung/code/AwesomeAlarm_BLE/)  
+**Slide**: [https://docs.google.com/presentation/d/1IQKsBf2jPfg-3wsu4O3Ukr4jt6mabXckDCMN17Xowb4](https://docs.google.com/presentation/d/1IQKsBf2jPfg-3wsu4O3Ukr4jt6mabXckDCMN17Xowb4)  
 **Demo video**:
 
-- video 1 (at our lab): https://www.youtube.com/watch?v=qOvSRf1jk_Y
-- video 2 (at the classroom): https://www.youtube.com/watch?v=w6Upcsi6-Ec  
+- video 1 (at our lab): [https://www.youtube.com/watch?v=qOvSRf1jk_Y](https://www.youtube.com/watch?v=qOvSRf1jk_Y)
+- video 2 (at the classroom): [https://www.youtube.com/watch?v=w6Upcsi6-Ec](https://www.youtube.com/watch?v=w6Upcsi6-Ec)  
 
 **Project date**: January 2020
 
@@ -64,7 +64,7 @@ The below shows the flowchart of Awesome Alarm. An ultrasonic sensor connected t
 
 | Ultrasound Sensor HC-SR04 | Servo motors (MG996r) x2 |Digits Display (TM1637)|
 | ---------------------------- | --------------------------------- | --------------------------------- |
-|![](https://i.imgur.com/NoB0310.png)|<img src="https://i.imgur.com/OQbGV0s.png" style="zoom:75%;" />|![](https://i.imgur.com/f44lyuK.png)|
+|![](https://i.imgur.com/NoB0310.png)|<img src="https://i.imgur.com/OQbGV0s.png" width="200" />|![](https://i.imgur.com/f44lyuK.png)|
 |**Light Sensor (PhotoResistor)**|**Buzzer**|**Big LED x9**|
 |![](https://i.imgur.com/QtPog6I.png)|![](https://i.imgur.com/Cmb4d6D.png)|<img src="https://i.imgur.com/FY7hSug.jpg" width="150" />|
 
@@ -88,7 +88,7 @@ Setup & Usage
 3. Compile! Burn the binary into STM32.
 
 ### Client side
-1. install the Android app with the APK file in `/android_app/`
+1. install the Android app with the APK file `/android_app/ES_Final.apk`
 
 
 
@@ -118,8 +118,8 @@ Achievement
 To sum up, we solved lots of problems, including integrating several sensors and mortors, head position detection, and APP-STM32 communication. And we not only test developed the code theoretically but also made a prototype of Awesome Alarm.
 
 - Demonstration video as link:
-  - Video 1: https://www.youtube.com/watch?v=qOvSRf1jk_Y
-  - video 2: https://www.youtube.com/watch?v=w6Upcsi6-Ec
+  - Video 1: [https://www.youtube.com/watch?v=qOvSRf1jk_Y](https://www.youtube.com/watch?v=qOvSRf1jk_Y)
+  - video 2: [https://www.youtube.com/watch?v=w6Upcsi6-Ec](https://www.youtube.com/watch?v=w6Upcsi6-Ec)
 
 Reference
 ===
