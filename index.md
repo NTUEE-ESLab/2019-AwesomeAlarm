@@ -1,7 +1,7 @@
 **2019 Fall Embedded System Lab Final Project - Awesome Alarm**
 ===
 
-Author: Chang-Le Liu（劉昶樂 b05901017/github id: [clalanliu](https://github.com/clalanliu)） Yung-Sung Chuang（莊永松 b05901033/github id: [voidism](https://github.com/voidism)） 
+Author: Chang-Le Liu（劉昶樂 b05901017/github id: [clalanliu](https://github.com/clalanliu)） Yung-Sung Chuang（莊永松 b05901033/github id: [voidism](https://github.com/voidism)）   
 Department: 4-th year, Electrical Engineering Department, National Taiwan University  
 Advisor: Professor Sheng-De Wang  
 Github repo: https://github.com/NTUEE-ESLab/2019-AwesomeAlarm  
@@ -100,6 +100,8 @@ Achievement
 To sum up, we solved lots of problems, including integrating several sensors and mortors, head position detection, and APP-STM32 communication. And we not only test developted the code theoretically but also made a prototype of Awesome Alarm.
 
 - Demonstration video as link:
+  - Video 1: https://www.youtube.com/watch?v=qOvSRf1jk_Y
+  - video 2: https://www.youtube.com/watch?v=w6Upcsi6-Ec
 
 Reference
 ===
