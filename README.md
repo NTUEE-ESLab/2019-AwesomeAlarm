@@ -77,7 +77,7 @@ We used 3D printer to make out the outer casing of the alarm, and fixed the stee
 ### IV. App Interface
 The below figure shows the designed app interface. The user can click "BT List" button to scan and connect the alarm. Click "Disconnect" to disconnect the alarm. Click "Select Time" to set the alarm time. Click "CountDown" to use countdown function. When the alarm rings, click "TurnOff" to turn off the alarm.   
 
-<img src="https://raw.githubusercontent.com/NTUEE-ESLab/2019-AwesomeAlarm/master/images/phone.jpg" style="zoom: 33%;" />
+<img src="https://raw.githubusercontent.com/NTUEE-ESLab/2019-AwesomeAlarm/master/images/phone.jpg"  width="300" />
 
 Setup & Usage
 ===
