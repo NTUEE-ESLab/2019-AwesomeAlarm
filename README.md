@@ -10,6 +10,7 @@
 **Github repo**: [https://github.com/NTUEE-ESLab/2019-AwesomeAlarm](https://github.com/NTUEE-ESLab/2019-AwesomeAlarm)  
 **Mbed repo**: [https://os.mbed.com/users/yungsung/code/AwesomeAlarm_BLE/](https://os.mbed.com/users/yungsung/code/AwesomeAlarm_BLE/)  
 **Slide**: [https://docs.google.com/presentation/d/1IQKsBf2jPfg-3wsu4O3Ukr4jt6mabXckDCMN17Xowb4](https://docs.google.com/presentation/d/1IQKsBf2jPfg-3wsu4O3Ukr4jt6mabXckDCMN17Xowb4)  
+**Report**: [https://github.com/NTUEE-ESLab/2019-AwesomeAlarm/raw/master/report.pdf](https://github.com/NTUEE-ESLab/2019-AwesomeAlarm/raw/master/report.pdf)  
 **Demo video**:
 
 - video 1 (at our lab): [https://www.youtube.com/watch?v=qOvSRf1jk_Y](https://www.youtube.com/watch?v=qOvSRf1jk_Y)
